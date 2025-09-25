@@ -5,7 +5,7 @@ export type User = any;
 
 @Injectable()
 export class UsersService {
-//todo replace with real users in database
+  //todo replace with real users in database
   private readonly users = [
     {
       userId: 1,
@@ -20,6 +20,6 @@ export class UsersService {
   ];
 
   async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+    return this.users.find((user) => user.username === username);
   }
 }
