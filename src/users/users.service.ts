@@ -1,25 +1,20 @@
 import { Injectable } from '@nestjs/common';
-
-//todo define User type
-export type User = any;
+import { PrismaService } from '../prisma.service';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  //todo replace with real users in database
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async user(userId: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: userId,
+    });
+  }
+
+  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    return this.prisma.user.create({
+      data,
+    });
   }
 }
