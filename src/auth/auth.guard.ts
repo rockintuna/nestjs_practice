@@ -10,6 +10,13 @@ import { Request } from 'express';
 import { IS_PUBLIC_KEY } from './auth.public';
 import { Reflector } from '@nestjs/core';
 
+interface JwtPayload {
+  sub: number;
+  username: string;
+  iat: number;
+  exp: number;
+}
+
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -27,13 +34,13 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<Request>();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: jwtConstants.secret,
       });
       // 💡 We're assigning the payload to the request object here
