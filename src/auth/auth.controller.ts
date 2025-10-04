@@ -10,6 +10,8 @@ import { AuthService } from './auth.service';
 import { Public } from './auth.public';
 import { Request } from 'express';
 import { User } from 'src/users/users.decorator';
+import { Role } from 'src/enums/role.enum';
+import { Roles } from './roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -30,6 +32,12 @@ export class AuthController {
 
   @Get('user')
   userInfo(@User() user: string) {
+    return user;
+  }
+
+  @Get('admin')
+  @Roles(Role.Admin)
+  adminInfo(@User() user: string) {
     return user;
   }
 }
