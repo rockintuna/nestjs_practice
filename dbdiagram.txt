@@ -1,0 +1,21 @@
+Table iyagi {
+  id uuid [primary key, not null]
+  title string [not null]
+  color string [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Table episode {
+  id uuid [primary key, not null]
+  iyagi_id uuid [not null]
+  title string [not null]
+  description string
+  image_url string
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Ref: iyagi.id < episode.iyagi_id
