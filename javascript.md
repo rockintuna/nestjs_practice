@@ -11,3 +11,27 @@
   중복선언 불가능,재할당 가능, 블록단위 scope
 - const
   중복선언/재할당 불가능(불변), 블록단위 scope
+
+## 동적 타입
+
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Data_structures
+
+- Javascript는 동적 타입이 있는 동적 언어이다.
+  Javascript의 변수는 어떤 특정 타입과 연결되지 않으며 모든 타입의 값으로 할당(또는 재할당) 가능하다.
+
+```javascript
+let foo = 42; // foo는 이제 숫자입니다
+foo = 'bar'; // foo는 이제 문자열입니다
+foo = true; // foo는 이제 불리언입니다
+```
+
+- Javascript는 또한 약타입 언어이다.
+  약타입 언어 : 다른 타입끼리의 변환이 가능하며 암묵적으로 변환 수행
+  Javascript는 작업중 타입이 맞지 않는 경우 오류가 발생하는 대신 암묵적으로 형변환이 발생합니다.
+  이는 편리하지만 개발자가 의도치 않은 작업이 수행될 수 있습니다.
+
+```javascript
+const foo = 42; // foo는 숫자입니다.
+const result = foo + '1'; // JavaScript는 foo를 문자열로 강제 변환하므로, 다른 피연산자와 연결할 수 있습니다.
+console.log(result); // 421
+```
