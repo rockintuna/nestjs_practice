@@ -1,7 +1,7 @@
 Table iyagi {
   id uuid [primary key, not null]
-  title string [not null]
-  color string [not null]
+  title varchar [not null]
+  color varchar [not null]
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
@@ -10,12 +10,36 @@ Table iyagi {
 Table episode {
   id uuid [primary key, not null]
   iyagi_id uuid [not null]
-  title string [not null]
-  description string
-  image_url string
+  title varchar [not null]
+  description varchar
+  rep_cut_asset_id varchar
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Table scene {
+  id uuid [primary key, not null]
+  episode_id uuid [not null]
+  title varchar [not null]
+  sequence integer [not null]
+  description varchar
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Table cut {
+  id uuid [primary key, not null]
+  scene_id uuid [not null]
+  sequence integer [not null]
+  description varchar
+  rep_cut_asset_id varchar
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
 }
 
 Ref: iyagi.id < episode.iyagi_id
+Ref: episode.id < scene.episode_id
+Ref: scene.id < cut.scene_id
