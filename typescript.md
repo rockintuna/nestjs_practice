@@ -142,3 +142,28 @@ interface를 우선적으로 사용하고 특정 기능이 필요할 때 type을
 
 ref :
 https://stackoverflow.com/questions/37233735/interfaces-vs-types-in-typescript/52682220#52682220
+
+
+## 타입 구성
+
+여러가지 타입을 이용하여 복잡한 새 타입을 작성
+
+- Union
+- Generic
+
+### Union
+
+유니언은 타입이 여러 타입 중 하나일 수 있음을 선언하는 방법이다. 
+
+```typescript
+type MyBool = true | false;
+```
+MyBool은 boolean으로 분류 됩니다. (구조적 타입 시스템)
+
+유니언이 주로 사용되는 사례는 string 또는 integer 리터럴 상수의 집합 타입을 정의할때 사용된다.
+
+```
+type WindowStates = "open" | "closed" | "minimized";
+type LockStates = "locked" | "unlocked";
+type OddNumbersUnderTen = 1 | 3 | 5 | 7 | 9;
+```
