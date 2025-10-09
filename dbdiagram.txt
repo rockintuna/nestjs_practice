@@ -40,6 +40,40 @@ Table cut {
   deleted_at timestamp
 }
 
+Table character {
+  id uuid [primary key, not null]
+  iyagi_id uuid [not null]
+  name varchar [not null]
+  feature varchar
+  personality varchar
+  //preview_image_urls varchar [not null] 항상 상단 3개 노출이라면 쿼리로 해결하는게 좋을듯
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Table asset {
+  id uuid [primary key, not null]
+  iyagi_id uuid [not null]
+  type varchar [not null]
+  //AI MODEL 사용 관련 컬럼 추가
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
+}
+
+Table character_asset {
+  id uuid [primary key, not null]
+  asset_id uuid [not null]
+  shot_type varchar
+  image_url varchar [not null]
+  personality boolean
+  //isPinned
+  //isFavorite : 상단 노출에 대한 디테일 정의
+}
+
 Ref: iyagi.id < episode.iyagi_id
 Ref: episode.id < scene.episode_id
 Ref: scene.id < cut.scene_id
+
+
