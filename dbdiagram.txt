@@ -34,7 +34,7 @@ Table cut {
   scene_id uuid [not null]
   sequence integer [not null]
   description varchar
-  rep_cut_asset_id varchar
+  rep_image_asset_id varchar
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
@@ -62,18 +62,43 @@ Table asset {
   deleted_at timestamp
 }
 
+Table cut_image_asset {
+  id uuid [primary key, not null]
+  cut_id uuid [not null]
+  asset_id uuid [not null]
+  //isPinned boolean
+  //isFavorite : 상단 노출, 좋아요에 대한 디테일 정의
+  url varchar [not null]
+}
+
+Table cut_video_asset {
+  id uuid [primary key, not null]
+  cut_id uuid [not null]
+  asset_id uuid [not null]
+  //영상 관련 컬럼 추가
+  url varchar [not null]
+}
+
 Table character_asset {
   id uuid [primary key, not null]
+  character_id uuid [not null]
   asset_id uuid [not null]
   shot_type varchar
-  image_url varchar [not null]
-  personality boolean
-  //isPinned
-  //isFavorite : 상단 노출에 대한 디테일 정의
+  url varchar [not null]
+  //isPinned boolean
+  //isFavorite : 상단 노출, 좋아요에 대한 디테일 정의
 }
 
 Ref: iyagi.id < episode.iyagi_id
 Ref: episode.id < scene.episode_id
 Ref: scene.id < cut.scene_id
 
+Ref: iyagi.id < character.id
+Ref: character.id < character_asset.character_id
 
+Ref : cut.id < cut_image_asset.cut_id
+Ref : cut.id < cut_video_asset.cut_id
+
+Ref: asset.id - character_asset.asset_id
+Ref: asset.id - cut_image_asset.asset_id
+Ref: asset.id - cut_video_asset.asset_id
