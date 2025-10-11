@@ -34,7 +34,7 @@ Table cut {
   scene_id uuid [not null]
   sequence integer [not null]
   description varchar
-  rep_image_asset_id varchar
+  rep_image_asset_id uuid
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
@@ -46,17 +46,22 @@ Table character {
   name varchar [not null]
   feature varchar
   personality varchar
-  //preview_image_urls varchar [not null] 항상 상단 3개 노출이라면 쿼리로 해결하는게 좋을듯
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
+}
+
+Table character_preview {
+  id uuid [primary key, not null]
+  character_id uuid [not null]
+  asset_id uuid [not null]
 }
 
 Table asset {
   id uuid [primary key, not null]
   iyagi_id uuid [not null]
   type varchar [not null]
-  //AI MODEL 사용 관련 컬럼 추가
+  //
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
@@ -96,9 +101,14 @@ Ref: scene.id < cut.scene_id
 Ref: iyagi.id < character.id
 Ref: character.id < character_asset.character_id
 
+Ref : character.id < character_preview.character_id
+Ref : asset.id < character_preview.asset_id
+
 Ref : cut.id < cut_image_asset.cut_id
 Ref : cut.id < cut_video_asset.cut_id
 
 Ref: asset.id - character_asset.asset_id
 Ref: asset.id - cut_image_asset.asset_id
 Ref: asset.id - cut_video_asset.asset_id
+
+Ref : asset.id < cut.rep_image_asset_id
