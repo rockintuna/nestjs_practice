@@ -61,7 +61,13 @@ Table asset {
   id uuid [primary key, not null]
   iyagi_id uuid [not null]
   type varchar [not null]
-  //
+  
+  model_type varchar [not null]
+  model_name varchar [not null] 
+  metadata json [not null]
+  input text [not null]
+  output json
+
   created_at timestamp [not null]
   updated_at timestamp [not null]
   deleted_at timestamp
@@ -92,6 +98,22 @@ Table character_asset {
   url varchar [not null]
   //isPinned boolean
   //isFavorite : 상단 노출, 좋아요에 대한 디테일 정의
+}
+
+Table conversation {
+  id uuid [primary key, not null]
+  episode_id uuid [not null]
+  cut_id uuid [not null]
+  charactor_id uuid [not null]
+  //만약 각각의 요소에 연결된 대화를 표현하기 위함이라면
+  //ex) episode : 1, cut : null, charactor : null
+  //중간 테이블로 분리하는게 더 정규화된 테이블임
+  
+  title varchar [not null]
+
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  deleted_at timestamp
 }
 
 Ref: iyagi.id < episode.iyagi_id
