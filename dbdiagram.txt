@@ -61,9 +61,8 @@ Table asset {
   id uuid [primary key, not null]
   iyagi_id uuid [not null]
   type varchar [not null]
-  
   model_type varchar [not null]
-  model_name varchar [not null] 
+  model_name varchar [not null]
   metadata json [not null]
   input text [not null]
   output json
@@ -134,3 +133,7 @@ Ref: asset.id - cut_image_asset.asset_id
 Ref: asset.id - cut_video_asset.asset_id
 
 Ref : asset.id < cut.rep_image_asset_id
+
+Ref : episode.id < conversation.episode_id
+Ref : cut.id < conversation.cut_id
+Ref : character.id < conversation.charactor_id
