@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "tsc-watch --onSuccess \"node dist/app.js\"",
+    "prestart": "npm run build",
+    "start": "node dist/app.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "prettier": "^2.2.1",
+    "tsc": "^2.0.3",
+    "tsc-watch": "^4.2.9",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "i": "^0.3.7"
+  }
+}
