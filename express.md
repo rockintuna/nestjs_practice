@@ -58,3 +58,30 @@ https://www.staging-typescript.org/tsconfig
 - compilerOptions : 컴파일 설정
 - compilerOptions.outDir : 컴파일 결과 저장 경로
 - compilerOptions.baseUrl : module import 기본 base 경로
+
+## install express
+
+`npm i express`
+
+`npm i @types/express -D`
+
+## run express app
+
+```typescript
+import * as express from 'express';
+
+const app: express.Express = express();
+const port = 8000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+```
+
+`app` : Express 서버 역할을 하는 instance
+`app.listen` : app 실행
+`app.get` : get api router 등록
