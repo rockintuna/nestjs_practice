@@ -85,3 +85,7 @@ app.listen(port, () => {
 `app` : Express 서버 역할을 하는 instance
 `app.listen` : app 실행
 `app.get` : get api router 등록
+
+`req: express.Request` : 요청 정보를 가지고 있는 API 인자값
+`res: express.Response` : 응답 정보를 가지고 있는 API 인자값
+`res.send(any)` : 응답 보내기
