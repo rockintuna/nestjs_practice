@@ -5,7 +5,9 @@ const port = 8000;
 
 app.get('/', (req: express.Request, res: express.Response) => {
   console.log(req);
-  res.send('Hello World!');
+  res.send({
+    message: 'Hello World! Welcome to Express with TypeScript',
+  });
 });
 
 app.listen(port, () => {
