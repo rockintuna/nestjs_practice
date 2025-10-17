@@ -89,3 +89,42 @@ app.listen(port, () => {
 `req: express.Request` : 요청 정보를 가지고 있는 API 인자값
 `res: express.Response` : 응답 정보를 가지고 있는 API 인자값
 `res.send(any)` : 응답 보내기
+
+## express middleware
+
+`middleware` : router 들의 공통적인 작업이나 모든 http 요청의 사전 작업들을 처리해주는 등의 작업을 하는 요소
+
+```typescript
+import * as express from 'express';
+import { Cat, CatType } from './app.module';
+
+const app: express.Express = express();
+
+app.use((req, res, next) => {
+  console.log(req.rawHeaders[1]);
+  next();
+});
+
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.send({ cats: Cat });
+});
+
+app.get('/cats/blue', (req, res) => {
+  res.send({ blue: Cat[0] });
+});
+
+app.get('/cats/som', (req, res) => {
+  res.send({ som: Cat[1] });
+});
+
+app.listen(8000, () => {
+  console.log(`Server is running on http://localhost:8000`);
+});
+```
+
+`next` : mw 콜백 함수, router 인수 모양에 next만 추가하면 mw가 됨. 다음 mw 또는 router를 실행
+`app.use` : 모든 http 메서드에 대한 mw
+
+선언 순서가 매우 중요하다.
+만약 mw가 router 앞에 있으면 mw를 먼저 거치게 되고
+router보다 뒤에 있으면 mw를 거치지 않고 API 처리가 종료될 수 있다.
