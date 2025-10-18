@@ -128,3 +128,33 @@ app.listen(8000, () => {
 선언 순서가 매우 중요하다.
 만약 mw가 router 앞에 있으면 mw를 먼저 거치게 되고
 router보다 뒤에 있으면 mw를 거치지 않고 API 처리가 종료될 수 있다.
+
+```typescript
+//json middleware
+app.use(express.json());
+
+app.post('/cats', (req, res) => {
+  const data = req.body;
+  Cat.push(data);
+  res.status(200).send({
+    success: 200,
+  });
+});
+
+//using url path variable
+app.get('/cats/:id', (req, res) => {
+  const cat = Cat.find((cat) => {
+    return (cat.id = req.params.id);
+  });
+  res.status(200).send({
+    success: true,
+    data: {
+      cat,
+    },
+  });
+});
+```
+
+router에서 json을 받으려면 express.json middleware를 사용해야 한다.
+
+path variable은 req.params로 꺼낼 수 있다.

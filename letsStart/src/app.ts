@@ -17,8 +17,27 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.send({ cats: Cat });
 });
 
-app.get('/cats/blue', (req, res) => {
-  res.send({ blue: Cat[0] });
+//json middleware
+app.use(express.json());
+
+app.post('/cats', (req, res) => {
+  const data = req.body;
+  Cat.push(data);
+  res.status(200).send({
+    success: 200,
+  });
+});
+
+app.get('/cats/:id', (req, res) => {
+  const cat = Cat.find((cat) => {
+    return (cat.id = req.params.id);
+  });
+  res.status(200).send({
+    success: true,
+    data: {
+      cat,
+    },
+  });
 });
 
 app.get('/cats/som', (req, res) => {
