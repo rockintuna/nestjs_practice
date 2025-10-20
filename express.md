@@ -158,3 +158,52 @@ app.get('/cats/:id', (req, res) => {
 router에서 json을 받으려면 express.json middleware를 사용해야 한다.
 
 path variable은 req.params로 꺼낼 수 있다.
+
+```typescript
+import { Cat, CatType } from './cats.module';
+import { Router } from 'express';
+
+const router = Router();
+
+router.get('/cats', (req, res, next) => {
+  console.log('This is the first middleware');
+  next();
+});
+
+//router.~~~
+
+export default router;
+```
+
+개별 라우터로 분리하려면 개별 라우터에서 router 인스턴스를 생성하고 default router를 export 한다.
+
+```typescript
+import * as express from 'express';
+import catRouter from './cats/cats.route';
+
+const app: express.Express = express();
+
+app.use((req, res, next) => {
+  console.log(req.rawHeaders[1]);
+  next();
+});
+
+//json middleware
+app.use(express.json());
+
+//app에 cat router 등록
+app.use(catRouter);
+
+app.use((req, res, next) => {
+  console.log('this is error middleware');
+  res.send({
+    error: '404 not found',
+  });
+});
+
+app.listen(8000, () => {
+  console.log(`Server is running on http://localhost:8000`);
+});
+```
+
+그리고 Express app 인스턴스에 개별 라우터에서 export한 default router를 등록한다.
